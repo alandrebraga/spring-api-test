@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/content")
-@CrossOrigin()
 public class ContentController {
 
     private final ContentRepository repository;
@@ -58,5 +57,10 @@ public class ContentController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
         }
         repository.deleteById(id);
+    }
+
+    @GetMapping("/filter/type/{type}")
+    public List<Content> filterByType(@PathVariable String type) {
+        return repository.findAllByContentType(type.toUpperCase());
     }
 }
